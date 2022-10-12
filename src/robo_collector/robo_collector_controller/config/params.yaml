@@ -17,6 +17,6 @@
     ros2_executor_threads_num: 4
     
     use_local_controller_mode: True
-    user: not_set
-    repository: not_set
-    commit_sha: not_set
+    user: Petya_Kuzmanova
+    repository: https://github.com/pbozidarova/robotics_v1
+    commit_sha: f0b580cbee5adc9ff2c3863644c6571b8614de9c
