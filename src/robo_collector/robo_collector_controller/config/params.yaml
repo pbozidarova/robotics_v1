@@ -19,4 +19,4 @@
     use_local_controller_mode: True
     user: Petya_Kuzmanova
     repository: https://github.com/pbozidarova/robotics_v1
-    commit_sha: f0b580cbee5adc9ff2c3863644c6571b8614de9c
+    commit_sha: 6341752cb7fb6a487b4741003bf7e0a7471dac0f
