@@ -59,6 +59,12 @@ void CleanerControllerExternalBridge::publishFieldMapCleaned() {
   _fieldMapCleanedPublisher->publish(Empty());
 }
 
+void CleanerControllerExternalBridge::publishRobotMoveCounter() const {
+  Int32 msg;
+  msg.data = _outInterface.solutionValidator->getTotalRobotMovesCounter();
+  _robotMoveCounterPublisher->publish(msg);
+}
+
 void CleanerControllerExternalBridge::resetControllerStatus() {
   const auto f = [this]() {
     if (ControllerStatus::SHUTTING_DOWN == _controllerStatus) {
@@ -159,6 +165,9 @@ ErrorCode CleanerControllerExternalBridge::initCommunication() {
 
   _fieldMapCleanedPublisher = create_publisher<Empty>(FIELD_MAP_CLEANED_TOPIC,
       qos, publisherOptions);
+
+  _robotMoveCounterPublisher = create_publisher<Int32>(ROBOT_MOVE_COUNTER_TOPIC,
+         qos, publisherOptions);
 
   _batteryStatusService = create_service<QueryBatteryStatus>(
       QUERY_BATTERY_STATUS_SERVICE,
@@ -267,6 +276,7 @@ void CleanerControllerExternalBridge::handleMoveAccepted(
   const MoveType moveType = getMoveType(goal->robot_move_type.move_type);
   const auto f = [this, moveType]() {
     _outInterface.solutionValidator->increaseTotalRobotMovesCounter(1);
+    publishRobotMoveCounter();
 
     const auto [success, majorError, penaltyTurns] =
         _outInterface.energyHandler->initiateMove();
@@ -278,6 +288,8 @@ void CleanerControllerExternalBridge::handleMoveAccepted(
     if (!success) {
       _outInterface.energyHandler->performPenaltyChange();
       _outInterface.reportInsufficientEnergyCb(penaltyTurns);
+      _outInterface.solutionValidator->increaseTotalRobotMovesCounter(
+          penaltyTurns);
       return;
     }
 
@@ -351,6 +363,7 @@ void CleanerControllerExternalBridge::handleChargeBatteryService(
       response->error_reason =
           "Robot is not at charging station. Finishing turn.";
       _outInterface.solutionValidator->increaseTotalRobotMovesCounter(1);
+      publishRobotMoveCounter();
       return;
     }
 
@@ -369,6 +382,7 @@ void CleanerControllerExternalBridge::handleChargeBatteryService(
 
     _outInterface.solutionValidator->increaseTotalRobotMovesCounter(
         outcome.turnsSpendCharging);
+    publishRobotMoveCounter();
   };
 
   _outInterface.invokeActionEventCb(f, ActionEventType::BLOCKING);
