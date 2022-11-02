@@ -47,18 +47,22 @@ void CleanerControllerExternalBridge::publishShutdownController() {
   _shutdownControllerPublisher->publish(Empty());
 }
 
-//called by the main thread
+//called by the update thread
 void CleanerControllerExternalBridge::publishFieldMapRevealed() {
   _outInterface.solutionValidator->fieldMapRevealed();
   _fieldMapReveleadedPublisher->publish(Empty());
 }
 
-//called by the main thread
+//called by the update thread
 void CleanerControllerExternalBridge::publishFieldMapCleaned() {
   _outInterface.solutionValidator->fieldMapCleaned();
   _fieldMapCleanedPublisher->publish(Empty());
 }
 
+<<<<<<< HEAD
+=======
+//called by the update thread
+>>>>>>> c30a5589616b67868b94a2078e0b716b2dab7911
 void CleanerControllerExternalBridge::publishRobotMoveCounter() const {
   Int32 msg;
   msg.data = _outInterface.solutionValidator->getTotalRobotMovesCounter();
@@ -167,7 +171,11 @@ ErrorCode CleanerControllerExternalBridge::initCommunication() {
       qos, publisherOptions);
 
   _robotMoveCounterPublisher = create_publisher<Int32>(ROBOT_MOVE_COUNTER_TOPIC,
+<<<<<<< HEAD
          qos, publisherOptions);
+=======
+        qos, publisherOptions);
+>>>>>>> c30a5589616b67868b94a2078e0b716b2dab7911
 
   _batteryStatusService = create_service<QueryBatteryStatus>(
       QUERY_BATTERY_STATUS_SERVICE,
@@ -287,9 +295,15 @@ void CleanerControllerExternalBridge::handleMoveAccepted(
 
     if (!success) {
       _outInterface.energyHandler->performPenaltyChange();
-      _outInterface.reportInsufficientEnergyCb(penaltyTurns);
       _outInterface.solutionValidator->increaseTotalRobotMovesCounter(
           penaltyTurns);
+      _outInterface.reportInsufficientEnergyCb(penaltyTurns);
+<<<<<<< HEAD
+      _outInterface.solutionValidator->increaseTotalRobotMovesCounter(
+          penaltyTurns);
+=======
+      publishRobotMoveCounter();
+>>>>>>> c30a5589616b67868b94a2078e0b716b2dab7911
       return;
     }
 

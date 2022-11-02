@@ -24,5 +24,4 @@ constexpr auto TOGGLE_HELP_PAGE_TOPIC = "toggle_help_page";
 constexpr auto DEBUG_MSG_TOPIC = "debug_msg";
 constexpr auto ROBOT_MOVE_COUNTER_TOPIC = "robot_move_counter";
 
-
 #endif /* ROBO_CLEANER_COMMON_ROBOCLEANERTOPICS_H_ */

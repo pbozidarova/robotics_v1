@@ -7,6 +7,7 @@
 //Other libraries headers
 #include <rclcpp/node.hpp>
 #include <std_msgs/msg/empty.hpp>
+#include <std_msgs/msg/int32.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <std_msgs/msg/int32.hpp>
 #include "robo_cleaner_interfaces/srv/query_initial_robot_state.hpp"
@@ -53,6 +54,8 @@ public:
 
   void publishFieldMapCleaned();
 
+  void publishRobotMoveCounter() const;
+
   void resetControllerStatus();
 
   void publishRobotMoveCounter() const;
@@ -63,6 +66,7 @@ private:
   ErrorCode initCommunication();
 
   using Empty = std_msgs::msg::Empty;
+  using Int32 = std_msgs::msg::Int32;
   using String = std_msgs::msg::String;
   using Int32 = std_msgs::msg::Int32;
   using UserAuthenticate = robo_cleaner_interfaces::msg::UserAuthenticate;
