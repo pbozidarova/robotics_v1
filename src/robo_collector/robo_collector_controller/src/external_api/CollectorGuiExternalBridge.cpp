@@ -81,13 +81,10 @@ ErrorCode CollectorGuiExternalBridge::initOutInterface(
 ErrorCode CollectorGuiExternalBridge::initCommunication() {
   using namespace std::placeholders;
   constexpr auto queueSize = 10;
-<<<<<<< HEAD
   _userAuthenticatePublisher = create_publisher<UserAuthenticate>(
       USER_AUTHENTICATE_TOPIC, queueSize);
   _playerActPublisher = create_publisher<RobotMoveType>(
 		  ROBOT_MOVE_TYPE_TOPIC, queueSize);
-=======
->>>>>>> c30a5589616b67868b94a2078e0b716b2dab7911
 
   rclcpp::QoS qos(queueSize);
   rclcpp::QoS latchQos = qos;

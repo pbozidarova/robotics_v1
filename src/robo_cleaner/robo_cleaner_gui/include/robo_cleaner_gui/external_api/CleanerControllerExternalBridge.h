@@ -58,8 +58,6 @@ public:
 
   void resetControllerStatus();
 
-  void publishRobotMoveCounter() const;
-
 private:
   ErrorCode initOutInterface(
       const CleanerControllerExternalBridgeOutInterface &outInterface);
@@ -68,7 +66,6 @@ private:
   using Empty = std_msgs::msg::Empty;
   using Int32 = std_msgs::msg::Int32;
   using String = std_msgs::msg::String;
-  using Int32 = std_msgs::msg::Int32;
   using UserAuthenticate = robo_cleaner_interfaces::msg::UserAuthenticate;
   using QueryBatteryStatus = robo_cleaner_interfaces::srv::QueryBatteryStatus;
   using QueryInitialRobotState = robo_cleaner_interfaces::srv::QueryInitialRobotState;
